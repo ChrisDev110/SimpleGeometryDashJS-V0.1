@@ -20,7 +20,7 @@
         <button id="left">Left</button>
         <button id="right">Right</button>
         <input type="number" id="obj-id">
-        <p>Block = 0, Spike = 1</p>
+        <p>Block = 0, Spike = 1, Small Portal = 2, Normal Portal</p>
         <script>
             let canvas = document.querySelector("canvas")
             let ctx = canvas.getContext("2d")
@@ -278,6 +278,7 @@
 
                     ctx.restore()
                 } else {
+                    camera.a = 0
                     player.y = 0
                     player.x = 0
                     player.xv = 0
