@@ -91,10 +91,17 @@
                 }
             }
 
-            window.onmousedown = () => {
+            /*window.onmousedown = () => {
                 mouseDown = true
             }
             window.onmouseup = () => {
+                mouseDown = false
+            }*/
+
+            window.onauxclick = () => {
+                mouseDown = true
+            }
+            window.onclick = () => {
                 mouseDown = false
             }
 
