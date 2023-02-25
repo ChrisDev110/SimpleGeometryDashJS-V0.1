@@ -30,11 +30,16 @@
             let gravity = 0.25
 
             let objs = [
-                {
-                    id: 0,
-                    x: 4,
-                    y: -1
-                }
+                {id: 1,x: 4,y: -1},
+                {id: 1,x: 9,y: -1},
+                {id: 1,x: 14,y: -1},
+                {id: 1,x: 15,y: -1},
+                {id: 0,x: 22,y: -1},
+                {id: 0,x: 26,y: -2},
+                {id: 0,x: 26,y: -1},
+                {id: 0,x: 30,y: -3},
+                {id: 0,x: 30,y: -2},
+                {id: 0,x: 30,y: -1}
             ]
 
             let onFloor = false
@@ -52,6 +57,8 @@
                 y: 0
             }
 
+            let mouseDown = false
+
             document.getElementById("play").onclick = () => {
                 let button = document.getElementById("play")
                 play = !play
@@ -65,29 +72,30 @@
             }
             document.getElementById("up").onclick = () => {
                 if (!play) {
-                    camera.y += 25
+                    camera.y += 50
                 }
             }
             document.getElementById("down").onclick = () => {
                 if (!play) {
-                    camera.y -= 25
+                    camera.y -= 50
                 }
             }
             document.getElementById("left").onclick = () => {
                 if (!play) {
-                    camera.x += 25
+                    camera.x += 50
                 }
             }
             document.getElementById("right").onclick = () => {
                 if (!play) {
-                    camera.x -= 25
+                    camera.x -= 50
                 }
             }
 
-            window.onclick = () => {
-                if (play & onFloor) {
-                    player.yv = -5.5
-                }
+            window.onmousedown = () => {
+                mouseDown = true
+            }
+            window.onmouseup = () => {
+                mouseDown = false
             }
 
             canvas.onclick = (data) => {
@@ -144,15 +152,37 @@
 
                 objs.forEach(obj => {
                     if (obj.id == 0) {
+                        ctx.globalAlpha = 0.5
                         ctx.fillStyle = "black"
                         ctx.fillRect(obj.x*25 - 12.5, obj.y*25 - 12.5, 25, 25)
+                        ctx.globalAlpha = 1
+                        strokeV()
+                        ctx.lineWidth = 1
+                        ctx.strokeRect(obj.x*25 - 12.5, obj.y*25 - 12.5, 25, 25)
                     } else if (obj.id == 1) {
-                        ctx.fillStyle = "gray"
-                        ctx.fillRect(obj.x*25 - 12.5, obj.y*25 - 12.5, 25, 25)
+                        ctx.beginPath()
+                        ctx.lineTo(obj.x*25 - 12.5, obj.y*25 + 12.5)
+                        ctx.lineTo(obj.x*25 + 12.5, obj.y*25 + 12.5)
+                        ctx.lineTo(obj.x*25, obj.y*25 - 12.5)
+                        ctx.closePath()
+                        strokeV()
+                        ctx.lineWidth = 1
+                        ctx.fillStyle = "black"
+                        ctx.globalAlpha = 1
+                        ctx.stroke()
+                        ctx.globalAlpha = 0.5
+                        ctx.fill()
+                        ctx.globalAlpha = 1
                     }
                 })
 
                 if (play) {
+                    if (mouseDown) {
+                        if (play & onFloor) {
+                            player.yv = -5.5
+                        }
+                    }
+
                     onFloor = false
 
                     camera.x = -player.x -50
