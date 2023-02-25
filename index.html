@@ -20,7 +20,7 @@
         <button id="left">Left</button>
         <button id="right">Right</button>
         <input type="number" id="obj-id">
-        <p>Block = 0, Spike = 1, Small Portal = 2, Normal Portal</p>
+        <p>Block = 0, Spike = 1, Small Portal = 2, Normal Portal = 3</p>
         <script>
             let canvas = document.querySelector("canvas")
             let ctx = canvas.getContext("2d")
@@ -56,8 +56,7 @@
             }
             let camera = {
                 x: 0,
-                y: 0,
-                a: 0
+                y: 0
             }
 
             let mouseDown = false
@@ -154,7 +153,6 @@
 
                 ctx.save()
                 ctx.translate(camera.x + canvas.width/2, camera.y + canvas.height/2)
-                ctx.rotate(rad(camera.a))
 
                 ctx.fillStyle = "blue"
                 strokeV()
@@ -201,8 +199,6 @@
 
                     player.x += player.xv
                     player.y += player.yv
-
-                    camera.a += (player.yv/3 - camera.a) * 0.1
 
                     player.xv = player.s * 2.5
                     player.yv += gravity
